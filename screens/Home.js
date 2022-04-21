@@ -102,11 +102,10 @@ export default function Home({ route, navigation }) {
       };
       const response = await fetch(TEST_ENDPOINT, request);
 
-      //errore nel parsing JSON?
-      //const json = await response.json();
-
-      setPhase(SUCCESS);
-      setCheckResult(null);
+      if (response.status == 200) {
+        setPhase(SUCCESS);
+        setCheckResult(null);
+      }
     } catch (error) {
       console.log("ERROR:", error);
     }
