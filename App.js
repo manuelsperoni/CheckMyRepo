@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import SetRepo from "./screens/SetRepo";
+import SetUser from "./screens/SetUser";
+import Home from "./screens/Home";
 
-export default function App() {
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { combineReducers } from "redux";
+import DataReducer from "./redux/DataReducer";
+
+const Stack = createStackNavigator();
+
+const rootReducer = combineReducers({
+  data: DataReducer,
+});
+
+const myStore = createStore(rootReducer);
+
+export default function App({ route, navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={myStore}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false }} name='Home' component={Home}></Stack.Screen>
+          <Stack.Screen name='USER' component={SetUser}></Stack.Screen>
+          <Stack.Screen name='REPOSITORY' component={SetRepo}></Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
