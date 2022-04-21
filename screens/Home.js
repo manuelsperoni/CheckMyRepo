@@ -7,6 +7,7 @@ import { useNetInfo } from "@react-native-community/netinfo";
 const TEST_ENDPOINT = "https://pushmore.io/webhook/UfV1JqA8d7tYJCibkDhD4Zwq";
 const SIMONE_ENDPOINT = "https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41";
 const GIT_HUB_API = "https://api.github.com/repos";
+const GIT_HUB_URL = "https://github.com";
 
 // CHECK RESULT
 const ERROR = 1;
@@ -96,11 +97,11 @@ export default function Home({ route, navigation }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          repoUrl: data.repo,
+          repoUrl: `${GIT_HUB_URL}/${data.user}/${data.repo}`,
           sender: data.user,
         }),
       };
-      const response = await fetch(TEST_ENDPOINT, request);
+      const response = await fetch(SIMONE_ENDPOINT, request);
 
       if (response.status == 200) {
         setPhase(SUCCESS);
