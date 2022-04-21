@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNetInfo } from "@react-native-community/netinfo";
 
+// ENPOINT
 const TEST_ENDPOINT = "https://pushmore.io/webhook/UfV1JqA8d7tYJCibkDhD4Zwq";
+const SIMONE_ENDPOINT = "https://pushmore.io/webhook/d3Gm4aEPCuhAUjfbECLLdW41";
 const GIT_HUB_API = "https://api.github.com/repos";
 
-// ERROR VALUE
+// CHECK RESULT
 const ERROR = 1;
 const OK = 2;
 
@@ -50,14 +52,17 @@ export default function Home({ route, navigation }) {
   const [errorType, setErrorType] = useState("");
   const [phase, setPhase] = useState(SETUP);
 
+  // set user button handler
   const onButtonSetUser = () => {
     navigation.push("USER");
   };
 
+  // set repobutton handler
   const onButtonSetRepo = () => {
     navigation.push("REPOSITORY");
   };
 
+  // check button handler
   const onButtonCheck = async () => {
     setPhase(CHECK);
     if (netInfo.isConnected) {
@@ -81,6 +86,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
+  // send button handler
   const onButtonSend = async () => {
     try {
       const request = {
@@ -95,6 +101,10 @@ export default function Home({ route, navigation }) {
         }),
       };
       const response = await fetch(TEST_ENDPOINT, request);
+
+      //errore nel parsing JSON?
+      //const json = await response.json();
+
       setPhase(SUCCESS);
       setCheckResult(null);
     } catch (error) {
@@ -102,6 +112,7 @@ export default function Home({ route, navigation }) {
     }
   };
 
+  // cool button handler
   const onButtonReset = () => {
     setPhase(SETUP);
     setCheckResult(null);
